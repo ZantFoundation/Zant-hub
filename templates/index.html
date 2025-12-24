@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Z-Ant Hub</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+    <link rel="icon" href="resources/zant-icon.png" type="image/png">
+</head>
+<body>
+    <header>
+        <div id="logoClick">
+            <img src="resources/zant-icon.png" alt="Z-Ant Logo">
+            <p>Z-Ant</p>
+        </div>
+        <nav>
+            <a href="https://zantfoundation.github.io/Website/#faq">FAQ</a>
+            <a href="https://github.com/ZantFoundation/Z-Ant">GitHub</a>
+        </nav>
+    </header>
+
+    <!-- Welcome Page -->
+    <div id="welcomePage" class="activePage">
+        <div id="heroSection">
+            <h1>
+                Z-Ant Simplifies the Deployment and</br>
+                Optimization of Neural Networks on</br>
+                Microprocessors
+            </h1>
+            <button id="startButton">Get Started</button>
+        </div>
+        <p>Z-Ant is an open-source project powered by Zig</p>
+    </div>
+
+    <!-- Select Model Page -->
+    <div id="selectModelPage" class="hiddenPage">
+        <img src="resources/arrow_back_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.svg" alt="Back" class="backButton">
+        <h2>Select a Model</h2>
+        
+        <div id="uploadSection">
+            <div id="dropZone">
+                <img src="resources/onnx-logo.png" alt="Upload ONNX Model">
+                <p>
+                    Drop or click here to upload</br>
+                    your ONNX model
+                </p> 
+                <input type="file" id="fileInput" accept=".onnx" style="display: none;">
+            </div>
+        </div>
+
+        <div id="predefinedModelsSection">
+            <h3>Or use a predefined model</h3>
+            <div id="modelList">
+                <!-- Predefined models will be listed here -->
+                <button class="modelButton" data-model="mnist-1">Mnist-1</button>
+                <button class="modelButton" data-model="mnist-8">Mnist-8</button>
+                <!-- <button class="modelButton" data-model="wakeWord">WakeWord</button> -->
+                <!-- <button class="modelButton" data-model="yolo">YOLO</button> -->
+                <!-- Add more models as needed -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Deployment Page -->
+    <div id="deploymentPage" class="hiddenPage">
+        <img src="resources/arrow_back_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.svg" alt="Back" class="backButton">
+        <h2 id="modelNameTitle">ModelName</h2> <!-- Title will be set dynamically -->
+        
+        <div class="deploymentContent">
+            <div id="deployTargetSection">
+                <div class="inputGroup">
+                    <label for="architectureInput">Architecture</label>
+                    <input type="text" id="architectureInput" class="deployInput" placeholder="thumb-freestanding">
+                </div>
+                <div class="inputGroup">
+                    <label for="cpuInput">CPU</label>
+                    <input type="text" id="cpuInput" class="deployInput" placeholder="cortex_m33">
+                </div>
+                <button id="generateLibBtn" class="actionButton">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M360-400v-160q0-17 11.5-28.5T400-600h160q17 0 28.5 11.5T600-560v160q0 17-11.5 28.5T560-360H400q-17 0-28.5-11.5T360-400Zm80-40h80v-80h-80v80Zm-80 280v-40h-80q-33 0-56.5-23.5T200-280v-80h-40q-17 0-28.5-11.5T120-400q0-17 11.5-28.5T160-440h40v-80h-40q-17 0-28.5-11.5T120-560q0-17 11.5-28.5T160-600h40v-80q0-33 23.5-56.5T280-760h80v-40q0-17 11.5-28.5T400-840q17 0 28.5 11.5T440-800v40h80v-40q0-17 11.5-28.5T560-840q17 0 28.5 11.5T600-800v40h80q33 0 56.5 23.5T760-680v80h40q17 0 28.5 11.5T840-560q0 17-11.5 28.5T800-520h-40v80h40q17 0 28.5 11.5T840-400q0 17-11.5 28.5T800-360h-40v80q0 33-23.5 56.5T680-200h-80v40q0 17-11.5 28.5T560-120q-17 0-28.5-11.5T520-160v-40h-80v40q0 17-11.5 28.5T400-120q-17 0-28.5-11.5T360-160Zm320-120v-400H280v400h400ZM480-480Z"/></svg> Generate Static Library
+                </button>
+            </div>
+            
+            <div id="actionButtonsSection">
+                <button id="visualizeBtn" class="actionButton">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M200-80q-50 0-85-35t-35-85q0-39 22.5-70t57.5-43v-87q0-50 35-85t85-35h160v-127q-35-12-57.5-43T360-760q0-50 35-85t85-35q50 0 85 35t35 85q0 39-22.5-70T520-647v127h160q50 0 85 35t35 85v87q35 12 57.5 43t22.5 70q0 50-35 85t-85 35q-50 0-85-35t-35-85q0-39 22.5-70t57.5-43v-87q0-17-11.5-28.5T680-440H520v127q35 12 57.5 43t22.5 70q0 50-35 85t-85 35q-50 0-85-35t-35-85q0-39 22.5-70t57.5-43v-127H280q-17 0-28.5 11.5T240-400v87q35 12 57.5 43t22.5 70q0 50-35 85t-85 35Zm0-80q17 0 28.5-11.5T240-200q0-17-11.5-28.5T200-240q-17 0-28.5 11.5T160-200q0 17 11.5 28.5T200-160Zm280 0q17 0 28.5-11.5T520-200q0-17-11.5-28.5T480-240q-17 0-28.5 11.5T440-200q0 17 11.5 28.5T480-160Zm280 0q17 0 28.5-11.5T800-200q0-17-11.5-28.5T760-240q-17 0-28.5 11.5T720-200q0 17 11.5 28.5T760-160ZM480-720q17 0 28.5-11.5T520-760q0-17-11.5-28.5T480-800q-17 0-28.5 11.5T440-760q0 17 11.5 28.5T480-720Z"/></svg> Visualize Model
+                </button>
+                <button id="downloadZigBtn" class="actionButton">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M200-120q-33 0-56.5-23.5T120-200v-500q0-14 4.5-26.5T138-750l56-68q9-11 20.5-16.5T240-840h480q14 0 25.5 5.5T766-818l56 68q9 11 13.5 23.5T840-700v500q0 33-23.5 56.5T760-120H200Zm16-600h528l-34-40H250l-34 40Zm-16 520h560v-440H200v440Zm408-220-55 55q-12 12-12 29t12 29q12 12 29 12t29-12l85-85q12-12 12-28t-12-28l-85-85q-12-12-29-12t-29 12q-12 12-12 29t12 29l55 55Zm-254 0 55-55q12-12 12-29t-12-29q-12-12-29-12t-29 12l-85 85q-12 12-12 28t12 28l85 85q12 12 29 12t29-12q12-12 12-29t-12-29l-55-55ZM200-200v-440 440Z"/></svg> Download Zig Code
+                </button>
+                <button id="downloadLibBtn" class="actionButton" disabled>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M440-183v-274L200-596v274l240 139Zm80 0 240-139v-274L520-457v274Zm-40-343 237-137-237-137-237 137 237 137ZM160-252q-19-11-29.5-29T120-321v-318q0-22 10.5-40t29.5-29l280-161q19-11 40-11t40 11l280 161q19 11 29.5 29t10.5 40v318q0 22-10.5 40T800-252L520-91q-19 11-40 11t-40-11L160-252Zm320-228Z"/></svg> Download Static Library
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- SVG Visualization Modal -->
+    <div id="svgModal" class="modal hiddenPage">
+        <div class="modalOverlay"></div>
+        <div id="svgContainer">
+            <!-- SVG will be loaded here -->
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="modal hiddenPage"> <!-- Reuse modal class for base styling, but higher z-index -->
+        <div class="modalOverlay"></div> <!-- Semi-transparent background -->
+        <div class="spinner"></div> <!-- Loading indicator -->
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
