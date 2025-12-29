@@ -2,7 +2,9 @@ import os
 import subprocess
 from flask import Flask, request, send_file, render_template
 from werkzeug.utils import secure_filename
+from dotenv import load_dotenv
 
+load_dotenv()
 app = Flask(__name__)
 
 # Cartelle temporanee
@@ -11,17 +13,23 @@ OUTPUT_FOLDER = '/tmp/zant_outputs'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
-# Percorso della repo di Zant sul server
-ZANT_REPO_PATH = "/var/www/Z-Ant"
+# Rileva automaticamente dove siamo
+if os.path.exists("/var/www/Z-Ant"):
+    # Siamo sul Server Vultr
+    ZANT_REPO_PATH = "/var/www/Z-Ant"
+else:
+    # Siamo sul tuo PC Locale (Modifica questo percorso con la tua cartella locale di Z-Ant!)
+    # Esempio: "/home/mirko/Documents/zig/Tiny/Z-Ant"
+    ZANT_REPO_PATH = os.getenv('ZANT_REPO_PATH') 
 
 @app.route('/')
 def home():
-    # Flask cercherà "index.html" dentro la cartella "templates"
+    # Flask will search for index.html in folder "templates"
     return render_template('index.html')
 
 @app.route('/convert', methods=['POST'])
 def convert():
-    # 1. Validazione File
+    # 1. File Validation
     if 'model_file' not in request.files:
         return "Nessun file caricato", 400
     
@@ -38,7 +46,7 @@ def convert():
     target_cpu = request.form.get('cpu', 'generic')
     
     # Nome file output
-    output_lib_name = "lib" + filename.replace('.onnx', '.a')
+    output_lib_name = "lib_zant.a"
     output_path = os.path.join(OUTPUT_FOLDER, output_lib_name)
 
     # 3. Costruzione Comando Zant

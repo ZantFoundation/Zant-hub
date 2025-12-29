@@ -1,16 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // --- GESTIONE NAVIGAZIONE ---
+    // --- NAVIGATION HANDLING ---
     const startButton = document.getElementById('startButton');
     const welcomePage = document.getElementById('welcomePage');
     const selectModelPage = document.getElementById('selectModelPage');
     const deploymentPage = document.getElementById('deploymentPage');
     const backButtons = document.querySelectorAll('.backButton');
     
-    // Variabile per salvare il file selezionato
+    // Variable to store the selected file
     let selectedFile = null;
 
-    // Vai alla pagina di selezione
+    // Go to the selection page
     startButton.addEventListener('click', () => {
         welcomePage.classList.add('hiddenPage');
         welcomePage.classList.remove('activePage');
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
         selectModelPage.classList.add('activePage');
     });
 
-    // Gestione Upload File (Click e Drag & Drop)
+    // File Upload Handling (Click and Drag & Drop)
     const dropZone = document.getElementById('dropZone');
     const fileInput = document.getElementById('fileInput');
 
@@ -32,43 +32,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function handleFileSelection(file) {
         selectedFile = file;
-        // Cambia pagina verso Deployment
+        // Switch page to Deployment
         selectModelPage.classList.add('hiddenPage');
         selectModelPage.classList.remove('activePage');
         deploymentPage.classList.remove('hiddenPage');
         deploymentPage.classList.add('activePage');
         
-        // Aggiorna titolo
+        // Update title
         document.getElementById('modelNameTitle').innerText = file.name;
     }
 
-    // Tasto Indietro
+    // Back Button
     backButtons.forEach(btn => {
         btn.addEventListener('click', () => {
-            // Logica semplice: torna sempre alla Home o ricarica per ora
+            // Simple logic: always return to Home or reload for now
             location.reload(); 
         });
     });
 
 
-    // --- GESTIONE GENERAZIONE LIBRERIA ---
+    // --- LIBRARY GENERATION HANDLING ---
     const generateBtn = document.getElementById('generateLibBtn');
     const downloadBtn = document.getElementById('downloadLibBtn');
     const loadingOverlay = document.getElementById('loadingOverlay');
 
     generateBtn.addEventListener('click', async () => {
         if (!selectedFile) {
-            alert("Nessun file selezionato!");
+            alert("No file selected!");
             return;
         }
 
         const arch = document.getElementById('architectureInput').value || "x86_64"; // Default
         const cpu = document.getElementById('cpuInput').value || "generic"; // Default
 
-        // Mostra caricamento
+        // Show loading indicator
         loadingOverlay.classList.remove('hiddenPage');
 
-        // Prepara i dati per Python
+        // Prepare data for Python
         const formData = new FormData();
         formData.append('model_file', selectedFile);
         formData.append('architecture', arch);
@@ -85,27 +85,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 throw new Error(errorMsg);
             }
 
-            // Se tutto va bene, riceviamo un file (Blob)
+            // If everything is OK, we receive a file (Blob)
             const blob = await response.blob();
             const url = window.URL.createObjectURL(blob);
             
-            // Attiva il bottone di download
+            // Enable the download button
             downloadBtn.disabled = false;
             downloadBtn.style.opacity = "1";
             downloadBtn.onclick = () => {
                 const a = document.createElement('a');
                 a.href = url;
-                // Nome del file scaricato
+                // Downloaded file name
                 a.download = selectedFile.name.replace('.onnx', '.a');
                 document.body.appendChild(a);
                 a.click();
                 a.remove();
             };
 
-            alert("Libreria generata con successo! Clicca su 'Download Static Library'.");
+            alert("Successfully code-generated static library! Click on 'Download Static Library'.");
 
         } catch (error) {
-            alert("Errore: " + error.message);
+            alert("Error: " + error.message);
         } finally {
             loadingOverlay.classList.add('hiddenPage');
         }

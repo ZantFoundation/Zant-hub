@@ -1,7 +1,9 @@
 nginx/ssl
 database
 .DS_Store
+.env
 venv/
 __pycache__/
 *.pyc
 .DS_Store
+guide.txt
