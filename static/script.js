@@ -50,7 +50,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-
     // --- LIBRARY GENERATION HANDLING ---
     const generateBtn = document.getElementById('generateLibBtn');
     const downloadBtn = document.getElementById('downloadLibBtn');
